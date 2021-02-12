@@ -30,6 +30,8 @@
     "start": "ts-node src/index.ts",
     "dev": "ts-node-dev src/index.ts",
     "build": "tsc -P .",
-    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+    "management": "TYPEORM_TYPE=management node --require ts-node/register ./node_modules/typeorm/cli.js migration:run",
+    "create:management": "TYPEORM_TYPE=management node --require ts-node/register ./node_modules/typeorm/cli.js migration:create -n"
   }
 }

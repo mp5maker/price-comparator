@@ -10,11 +10,18 @@ export default {
   synchronize: false,
   logging: false,
   entities: ["src/entity/**/*.ts"],
-  migrations: ["src/migration/**/*.ts"],
+  migrations: [
+    process.env.TYPEORM_TYPE === "management"
+      ? "src/management/**/*.ts"
+      : "src/migration/**/*.ts",
+  ],
   subscribers: ["src/subscriber/**/*.ts"],
   cli: {
     entitiesDir: "src/entity",
-    migrationsDir: "src/migration",
+    migrationsDir:
+      process.env.TYPEORM_TYPE === "management"
+        ? "src/management"
+        : "src/migration",
     subscribersDir: "src/subscriber",
   },
 };
