@@ -1,0 +1,27 @@
+.commonFilterContainer {
+  display: flex;
+  min-height: var(--minHeight);
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 15px 0 var(--boxShadow);
+  padding: 0 var(--small);
+  margin-bottom: var(--extraSmall);
+}
+
+.commonFilterContents {
+  margin-right: var(--medium);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.commonFilterContent {
+  margin-right: var(--medium);
+  display: flex;
+  justify-content: flex-start;
+  box-shadow: 0 1px 15px 0 var(--boxShadow);
+  padding: var(--extraSmall);
+}
+
+.commonFilterContentLabel {
+  margin-right: var(--medium);
+}

@@ -4,6 +4,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import get from "lodash/get";
 import { Table } from "../components/table";
 import { MetaData } from "../components/meta-data";
+import { CommonFilter } from '../filters/common'
 
 export const getStaticProps = async () => {
   const response = await apiHelper.product.getAll();
@@ -33,6 +34,7 @@ const IndexPage: React.FC<IndexPropsInterface> = ({ products }) => {
   return (
     <div className={styles.indexContainer}>
       <MetaData title={"Compare Prices"} />
+      <CommonFilter />
       <Table
         list={products}
         display={{
