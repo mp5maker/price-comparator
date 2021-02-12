@@ -40,7 +40,6 @@ const IndexPage: React.FC<IndexPropsInterface> = ({
   };
 
   const handleFilter = ({ form }: any) => {
-    console.log("🚀 ~ file: index.tsx ~ line 43 ~ handleFilter ~ form", form);
     const price = get(form, "price", 0);
     const type = get(form, "type", "");
     const distributor = get(form, "distributor", "");

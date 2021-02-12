@@ -54,14 +54,20 @@ router.get(
         ]);
       productQueryBuilder.where(`product.createdAt IS NOT NULL`);
 
-      if (price)
+      if (price) {
         productQueryBuilder.andWhere(`product.price < :price`, { price });
-      // if (distributor)
-      //   productQueryBuilder.andWhere(`distributor.id = :distributor`, {
-      //     distributor,
-      //   });
-      // if (type)
-      //   productQueryBuilder.andWhere(`types.typeId = :type`, { type });
+      }
+
+      if (distributor) {
+        productQueryBuilder.andWhere(`distributors.id = :distributor`, {
+          distributor,
+        });
+      }
+
+      if (type) {
+        productQueryBuilder.andWhere(`types.id = :type`, { type });
+      }
+
       const product = await productQueryBuilder.getMany();
 
       return response.status(RESPONSE_STATUS.OK).json(product);
