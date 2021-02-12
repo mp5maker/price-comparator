@@ -57,6 +57,13 @@ const IndexPage: React.FC<IndexPropsInterface> = ({
       <MetaData title={"Compare Prices"} />
       <CommonFilter onChange={handleFilter} />
       <Table
+        noDataContent={
+          <tbody className={styles.noDataFound}>
+            <tr>
+              <td>Sorry, No Data Found</td>
+            </tr>
+          </tbody>
+        }
         list={products}
         display={{
           thead: ({ property }) => {

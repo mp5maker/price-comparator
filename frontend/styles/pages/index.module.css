@@ -1,3 +1,12 @@
 .indexContainer {
   padding: var(--small);
 }
+
+.noDataFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  font-size: var(--medium);
+  font-weight: bold;
+}
