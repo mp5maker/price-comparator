@@ -42,7 +42,7 @@ const IndexPage: React.FC<IndexPropsInterface> = ({ products }) => {
           tbody: ({ property, row }) => {
             if (property == "distributor")
               return get(row, "distributor.name", "");
-            if (property == "type") return get(row, "type.type", "");
+            if (property == "type") return get(row, "type.name", "");
             if (property == "photos")
               return (
                 <div>

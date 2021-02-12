@@ -1,4 +1,4 @@
-import styles from '../styles/components/table.module.css'
+import styles from "../styles/components/table.module.css";
 
 interface TablePropsInterface {
   list: Array<any>;
@@ -47,7 +47,7 @@ export const Table: React.FC<TablePropsInterface> = ({
   noDataContent,
   theadCustom,
   tbodyCustom,
-  children
+  children,
 }): JSX.Element => {
   const hasList = Array.isArray(list) && list.length > 0;
 
@@ -70,15 +70,15 @@ export const Table: React.FC<TablePropsInterface> = ({
   );
 
   const TbodyContent = (
-    <tbody className={"tbody-content"}>
+    <tbody className={styles.tbodyContent}>
       {hasList ? (
         list.map((row, rowIndex) => {
           return (
-            <tr className={"tbody-tr-content"} key={rowIndex}>
+            <tr className={styles.tbodyTrContent} key={rowIndex}>
               {properties.map((property, columnIndex) => {
                 return (
                   <td
-                    className={"tbody-td-content"}
+                    className={styles.tbodyTdContent}
                     key={`${rowIndex}-${columnIndex}`}
                   >
                     <>
@@ -112,7 +112,7 @@ export const Table: React.FC<TablePropsInterface> = ({
           )}
         </table>
       )}
-      { children }
+      {children}
     </div>
   );
 };

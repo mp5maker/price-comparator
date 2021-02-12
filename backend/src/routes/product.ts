@@ -29,6 +29,7 @@ router.get(
       .select([
         'product.id',
         'product.alias',
+        'product.name',
         'product.createdAt',
         'product.updatedAt',
         'product.model',
@@ -39,6 +40,7 @@ router.get(
         'type.id',
         'type.alias',
         'type.type',
+        'type.name',
         'photos.id',
         'photos.alias',
         'photos.filename'

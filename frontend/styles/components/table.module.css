@@ -1,5 +1,6 @@
 .tableContainer {
   width: 100%;
+  border: 1px solid var(--lightgrey);
 }
 
 .tableContent {
@@ -12,9 +13,17 @@
 }
 
 .theadTrContent {
-  min-height: var(--minHeight);
 }
 
 .theadThContent {
-  min-height: var(--minHeight);
+  text-align: left;
+  padding: var(--small);
+}
+
+.tbodyContent {
+}
+.tbodyTrContent {
+}
+.tbodyTdContent {
+  padding: var(--small);
 }
