@@ -84,6 +84,11 @@ export const Table: React.FC<TablePropsInterface> = ({
                     <>
                       {display.tbody({ property, row, rowIndex, columnIndex })}
                     </>
+                    {columnIndex == 0 ? (
+                      <div className={styles.tbodyTrIndicator}>&nbsp;</div>
+                    ) : (
+                      <></>
+                    )}
                   </td>
                 );
               })}

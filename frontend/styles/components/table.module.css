@@ -20,10 +20,26 @@
   padding: var(--small);
 }
 
-.tbodyContent {
-}
+.tbodyContent {}
 .tbodyTrContent {
+  position: relative;
 }
+.tbodyTrIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--borderWidth);
+  height: 100%;
+  display: block;
+  background-color: transparent;
+  transition: all linear 0.25s;
+}
+.tbodyTrContent:hover .tbodyTrIndicator{
+  transition: all linear 0.25s;
+  background-color: var(--firebrick);
+}
+
 .tbodyTdContent {
+  position: relative;
   padding: var(--small);
 }
