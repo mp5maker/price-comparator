@@ -12,7 +12,7 @@ export class Product extends Base {
 
   @OneToOne(() => ProductType)
   @JoinColumn()
-  productType?: ProductType;
+  type?: ProductType;
 
   @Column({ default: null })
   model?: string;
@@ -20,6 +20,6 @@ export class Product extends Base {
   @Column("float")
   price: number;
 
-  @OneToMany(() => ProductPhoto, (productPhoto) => productPhoto.product)
+  @OneToMany(() => ProductPhoto, (productPhoto) => productPhoto.product, { cascade: true })
   photos?: ProductPhoto[];
 }

@@ -3,6 +3,6 @@ import { Base } from "../core/Base";
 
 @Entity()
 export class ProductType extends Base {
-  @Column()
+  @Column({ default: null })
   type: string
 }

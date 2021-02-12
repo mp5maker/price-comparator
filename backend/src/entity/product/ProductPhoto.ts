@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 import { Base } from "../core/Base";
 import { Product } from "./Product";
 
@@ -8,7 +8,7 @@ export class ProductPhoto extends Base {
   encoding?: string;
 
   @Column({ default: null })
-  mimeype?: string;
+  mimetype?: string;
 
   @Column({ default: null })
   size?: string;
@@ -22,6 +22,6 @@ export class ProductPhoto extends Base {
   @Column({ default: null })
   path?: string;
 
-  @ManyToMany(() => Product, (product) => product.photos)
-  product?: Product;
+  @ManyToOne(() => Product, (product) => product.photos)
+  product: Product;
 }
