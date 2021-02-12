@@ -21,7 +21,7 @@ export const Select: React.FC<SelectPropsInterface> = ({
 }): JSX.Element => {
   return (
     <select value={value} onChange={onChange} {...otherProps}>
-      <option value={0}>None</option>
+      <option value={""}>None</option>
       {list.map((item, index) => {
         const _customValue = customValue({ item });
         const _customDisplay = customDisplay({ item });

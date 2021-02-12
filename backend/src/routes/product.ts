@@ -10,6 +10,7 @@ import { ProductType } from "../entity/product/ProductType";
 import multerHelper from "../utilities/multerHelper";
 import responseHelper from "../utilities/responseHelper";
 import { ProductDTO } from "../dto/request/product.dto";
+import { LessThanOrEqual } from "typeorm";
 const router = express.Router();
 
 database.init();
@@ -20,32 +21,48 @@ database.init();
  */
 router.get(
   "/",
-  async (_request: express.Request, response: express.Response) => {
+  async (request: express.Request, response: express.Response) => {
     try {
-      const product = await database.productRepository.createQueryBuilder("product")
-      .leftJoinAndSelect("product.distributors", "distributors")
-      .leftJoinAndSelect("product.types", "types")
-      .leftJoinAndSelect("product.photos", "photos")
-      .select([
-        'product.id',
-        'product.alias',
-        'product.name',
-        'product.createdAt',
-        'product.updatedAt',
-        'product.model',
-        'product.price',
-        'distributors.id',
-        'distributors.alias',
-        'distributors.name',
-        'types.id',
-        'types.alias',
-        'types.type',
-        'types.name',
-        'photos.id',
-        'photos.alias',
-        'photos.filename'
-      ])
-      .getMany()
+      const query = get(request, "query", {});
+      const type = get(query, "type", "");
+      const price = get(query, "price", "");
+      const distributor = get(query, "distributor", "");
+
+      let productQueryBuilder = database.productRepository
+        .createQueryBuilder("product")
+        .leftJoinAndSelect("product.distributors", "distributors")
+        .leftJoinAndSelect("product.types", "types")
+        .leftJoinAndSelect("product.photos", "photos")
+        .select([
+          "product.id",
+          "product.alias",
+          "product.name",
+          "product.createdAt",
+          "product.updatedAt",
+          "product.model",
+          "product.price",
+          "distributors.id",
+          "distributors.alias",
+          "distributors.name",
+          "types.id",
+          "types.alias",
+          "types.type",
+          "types.name",
+          "photos.id",
+          "photos.alias",
+          "photos.filename",
+        ]);
+      productQueryBuilder.where(`product.createdAt IS NOT NULL`);
+
+      if (price)
+        productQueryBuilder.andWhere(`product.price < :price`, { price });
+      // if (distributor)
+      //   productQueryBuilder.andWhere(`distributor.id = :distributor`, {
+      //     distributor,
+      //   });
+      // if (type)
+      //   productQueryBuilder.andWhere(`types.typeId = :type`, { type });
+      const product = await productQueryBuilder.getMany();
 
       return response.status(RESPONSE_STATUS.OK).json(product);
     } catch (error) {

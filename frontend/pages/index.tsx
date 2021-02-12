@@ -4,7 +4,8 @@ import { AxiosError, AxiosResponse } from "axios";
 import get from "lodash/get";
 import { Table } from "../components/table";
 import { MetaData } from "../components/meta-data";
-import { CommonFilter } from '../filters/common'
+import { CommonFilter } from "../filters/common";
+import { useState } from "react";
 
 export const getStaticProps = async () => {
   const response = await apiHelper.product.getAll();
@@ -21,20 +22,41 @@ interface IndexPropsInterface {
   products: Array<any>;
 }
 
-const IndexPage: React.FC<IndexPropsInterface> = ({ products }) => {
-  const callApi = () => {
+const IndexPage: React.FC<IndexPropsInterface> = ({
+  products: serverProducts,
+}) => {
+  const [products, setProducts] = useState<Array<any>>(serverProducts);
+
+  const callApi = ({ params }: any) => {
     apiHelper.product
-      .getAll()
-      .then((response: AxiosResponse) => console.log(response))
+      .getAll({ params })
+      .then((response: AxiosResponse) => {
+        const data = get(response, "data", []);
+        setProducts(data);
+      })
       .catch((error: AxiosError) => {
         console.log(error.response);
       });
   };
 
+  const handleFilter = ({ form }: any) => {
+    console.log("🚀 ~ file: index.tsx ~ line 43 ~ handleFilter ~ form", form);
+    const price = get(form, "price", 0);
+    const type = get(form, "type", "");
+    const distributor = get(form, "distributor", "");
+
+    const params = {
+      ...(price ? { price } : {}),
+      ...(type ? { type } : {}),
+      ...(distributor ? { distributor } : {}),
+    };
+    callApi({ params });
+  };
+
   return (
     <div className={styles.indexContainer}>
       <MetaData title={"Compare Prices"} />
-      <CommonFilter />
+      <CommonFilter onChange={handleFilter} />
       <Table
         list={products}
         display={{
@@ -62,7 +84,7 @@ const IndexPage: React.FC<IndexPropsInterface> = ({ products }) => {
                           "filename",
                           ""
                         )}`}
-                        width={'auto'}
+                        width={"auto"}
                         height={100}
                         key={index}
                       />
@@ -73,7 +95,14 @@ const IndexPage: React.FC<IndexPropsInterface> = ({ products }) => {
             return get(row, property, "");
           },
         }}
-        properties={["name", "model", "distributors", "types", "price", "photos"]}
+        properties={[
+          "name",
+          "model",
+          "distributors",
+          "types",
+          "price",
+          "photos",
+        ]}
       />
     </div>
   );

@@ -6,7 +6,9 @@ import { Select } from "../components/select";
 import { Button } from "../components/button";
 import styles from "../styles/filters/common.module.css";
 
-interface CommonFilterPropsInterface {}
+interface CommonFilterPropsInterface {
+  onChange?: (params: any) => void;
+}
 
 const defaultState = {
   price: "",
@@ -49,11 +51,12 @@ export const CommonFilter: React.FC<CommonFilterPropsInterface> = ({
   const handleSelect = (event: React.FormEvent<HTMLSelectElement>) => {
     const value = get(event, "currentTarget.value", "");
     const name = get(event, "currentTarget.name", "");
-    setForm({
+    const newForm = {
       ...form,
       [name]: value,
-    });
-    if (onChange) onChange({ current: { name, value }, form });
+    };
+    setForm(newForm);
+    if (onChange) onChange({ current: { name, value }, form: newForm });
   };
 
   const handleClear = () => {
