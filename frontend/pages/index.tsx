@@ -60,7 +60,7 @@ const IndexPage: React.FC<IndexPropsInterface> = ({ products }) => {
                           "filename",
                           ""
                         )}`}
-                        width={100}
+                        width={'auto'}
                         height={100}
                         key={index}
                       />
