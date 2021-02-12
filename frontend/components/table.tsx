@@ -1,3 +1,5 @@
+import styles from '../styles/components/table.module.css'
+
 interface TablePropsInterface {
   list: Array<any>;
   theadCustom?: ({
@@ -18,7 +20,7 @@ interface TablePropsInterface {
     }: {
       property: string;
       index: number;
-    }) => JSX.Element | JSX.Element[];
+    }) => JSX.Element | JSX.Element[] | string;
     tbody: ({
       property,
       row,
@@ -29,7 +31,7 @@ interface TablePropsInterface {
       row: any;
       rowIndex: number;
       columnIndex: number;
-    }) => JSX.Element | JSX.Element[];
+    }) => JSX.Element | JSX.Element[] | string;
   };
   loading?: boolean;
   loadingContent?: JSX.Element | JSX.Element[];
@@ -45,16 +47,17 @@ export const Table: React.FC<TablePropsInterface> = ({
   noDataContent,
   theadCustom,
   tbodyCustom,
+  children
 }): JSX.Element => {
   const hasList = Array.isArray(list) && list.length > 0;
 
   const TheadContent = (
-    <thead className={"thead-content"}>
-      <tr className={"thead-tr-content"}>
+    <thead className={styles.theadContent}>
+      <tr className={styles.theadTrContent}>
         {hasList ? (
           properties.map((property, index) => {
             return (
-              <th key={index} className={"thead-th-content"}>
+              <th key={index} className={styles.theadThContent}>
                 <>{display.thead({ property, index })}</>
               </th>
             );
@@ -94,11 +97,11 @@ export const Table: React.FC<TablePropsInterface> = ({
   );
 
   return (
-    <div className={"table-container"}>
+    <div className={styles.tableContainer}>
       {loading ? (
         loadingContent
       ) : (
-        <table className={"text-content"}>
+        <table className={styles.tableContent}>
           {hasList ? (
             <>
               {theadCustom ? theadCustom({ TheadContent }) : TheadContent}
@@ -109,6 +112,7 @@ export const Table: React.FC<TablePropsInterface> = ({
           )}
         </table>
       )}
+      { children }
     </div>
   );
 };

@@ -1,0 +1,20 @@
+.tableContainer {
+  width: 100%;
+}
+
+.tableContent {
+  width: 100%;
+}
+
+.theadContent {
+  box-shadow: 0 1px 15px 0 var(--boxShadow);
+  min-height: var(--minHeight);
+}
+
+.theadTrContent {
+  min-height: var(--minHeight);
+}
+
+.theadThContent {
+  min-height: var(--minHeight);
+}
