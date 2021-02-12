@@ -1,0 +1,7 @@
+.navbarContainer {
+  min-height: var(--minHeight);
+  display: flex;
+  padding: var(--small);
+  box-shadow: 0 1px 15px 0 var(--boxShadow);
+  align-items: center;
+}

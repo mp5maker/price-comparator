@@ -1,0 +1,4 @@
+.pageContainer {}
+.mainContainer {
+  min-height: calc(100vh - 2.5 * var(--minHeight));
+}
