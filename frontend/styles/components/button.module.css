@@ -1,0 +1,22 @@
+.buttonContainer {
+  padding: var(--extraSmall) var(--small);
+  min-height: 0.5 * var(--minHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.7;
+  transition: all linear 0.25s;
+  border: 1px solid var(--lightgrey);
+  font-weight: bold;
+  font-size: var(--small);
+  border-radius: var(--borderRadius);
+  background-color: var(--brown);
+  color: var(--lightgrey);
+}
+
+.buttonContainer:hover {
+  opacity: 1;
+  box-shadow: 0 1px 15px 0 var(--boxShadow);
+  transition: all linear 0.25s;
+  border: 1px solid var(--lightgrey);
+}

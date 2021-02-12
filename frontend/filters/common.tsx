@@ -1,9 +1,10 @@
 import { AxiosError } from "axios";
-import { Fragment, useEffect, useState } from "react";
-import apiHelper from "../api/apiHelper";
-import styles from "../styles/filters/common.module.css";
 import get from "lodash/get";
+import { useEffect, useState } from "react";
+import apiHelper from "../api/apiHelper";
 import { Select } from "../components/select";
+import { Button } from "../components/button";
+import styles from "../styles/filters/common.module.css";
 
 interface CommonFilterPropsInterface {}
 
@@ -124,7 +125,7 @@ export const CommonFilter: React.FC<CommonFilterPropsInterface> = ({
           )}
         </div>
         <div>
-          <button onClick={handleClear}>Clear</button>
+          <Button onClick={handleClear}>Clear</Button>
         </div>
       </div>
     </>
