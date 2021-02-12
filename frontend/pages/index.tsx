@@ -6,6 +6,8 @@ import { Table } from "../components/table";
 import { MetaData } from "../components/meta-data";
 import { CommonFilter } from "../filters/common";
 import { useState } from "react";
+import { Button } from "../components/button";
+import { Modal } from "../components/modal";
 
 export const getStaticProps = async () => {
   const response = await apiHelper.product.getAll();
@@ -26,6 +28,8 @@ const IndexPage: React.FC<IndexPropsInterface> = ({
   products: serverProducts,
 }) => {
   const [products, setProducts] = useState<Array<any>>(serverProducts);
+  const [showImageModal, setShowImageModal] = useState<boolean>(false);
+  const [_imageURL, setImageURL] = useState<string>("");
 
   const callApi = ({ params }: any) => {
     apiHelper.product
@@ -55,6 +59,15 @@ const IndexPage: React.FC<IndexPropsInterface> = ({
   return (
     <div className={styles.indexContainer}>
       <MetaData title={"Compare Prices"} />
+      <Modal
+        show={showImageModal}
+        title={"Image Preview"}
+        onClose={() => setShowImageModal(false)}
+      >
+        <div>
+          <img src={_imageURL} width={"auto"} height={"100%"} />
+        </div>
+      </Modal>
       <CommonFilter onChange={handleFilter} />
       <Table
         noDataContent={
@@ -83,17 +96,27 @@ const IndexPage: React.FC<IndexPropsInterface> = ({
               return (
                 <div>
                   {get(row, property, []).map((item: any, index: number) => {
+                    const imageURL = `http://localhost:4000/images/${get(
+                      item,
+                      "filename",
+                      ""
+                    )}`;
+
                     return (
-                      <img
-                        src={`http://localhost:4000/images/${get(
-                          item,
-                          "filename",
-                          ""
-                        )}`}
-                        width={"auto"}
-                        height={100}
+                      <Button
                         key={index}
-                      />
+                        style={{
+                          backgroundColor: "transparent",
+                          width: "100%",
+                          justifyContent: "flex-start",
+                        }}
+                        onClick={() => {
+                          setImageURL(imageURL);
+                          setShowImageModal(true);
+                        }}
+                      >
+                        <img src={imageURL} width={"auto"} height={100} />
+                      </Button>
                     );
                   })}
                 </div>
