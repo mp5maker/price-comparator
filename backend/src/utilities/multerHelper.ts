@@ -4,7 +4,7 @@ import fs from "fs";
 
 const storage = multer.diskStorage({
   destination: function (_request, _file, callback) {
-    const LOCATION = path.join(__dirname, "..", "static");
+    const LOCATION = path.join(__dirname, "..", "static/images/");
     if (!fs.existsSync(LOCATION)) {
       // @ts-ignore
       fs.mkdirSync(LOCATION, { recursive: true });

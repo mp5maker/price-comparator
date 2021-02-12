@@ -23,8 +23,8 @@ router.get(
   async (_request: express.Request, response: express.Response) => {
     try {
       const product = await database.productRepository.createQueryBuilder("product")
-      .leftJoinAndSelect("product.distributor", "distributor")
-      .leftJoinAndSelect("product.type", "type")
+      .leftJoinAndSelect("product.distributors", "distributors")
+      .leftJoinAndSelect("product.types", "types")
       .leftJoinAndSelect("product.photos", "photos")
       .select([
         'product.id',
@@ -34,13 +34,13 @@ router.get(
         'product.updatedAt',
         'product.model',
         'product.price',
-        'distributor.id',
-        'distributor.alias',
-        'distributor.name',
-        'type.id',
-        'type.alias',
-        'type.type',
-        'type.name',
+        'distributors.id',
+        'distributors.alias',
+        'distributors.name',
+        'types.id',
+        'types.alias',
+        'types.type',
+        'types.name',
         'photos.id',
         'photos.alias',
         'photos.filename'
@@ -85,12 +85,12 @@ router.post(
         /* Distributor */
         const distributor = new Distributor();
         distributor.id = get(body, "distributor", 0);
-        product.distributor = distributor;
+        product.distributors = [distributor];
 
         /* Type */
         const type = new ProductType();
         type.id = get(body, "type", 0);
-        product.type = type;
+        product.types = [type];
 
         product.photos = [productPhoto];
         const createdProduct = await database.connection.manager.save(product);

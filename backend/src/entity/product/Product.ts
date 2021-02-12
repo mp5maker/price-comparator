@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
 import { Base } from "../core/Base";
 import { Distributor } from "./Distributor";
 import { ProductPhoto } from "./ProductPhoto";
@@ -6,13 +6,13 @@ import { ProductType } from "./ProductType";
 
 @Entity()
 export class Product extends Base {
-  @OneToOne(() => Distributor)
-  @JoinColumn()
-  distributor?: Distributor;
+  @ManyToMany(() => Distributor)
+  @JoinTable()
+  distributors?: Distributor[];
 
-  @OneToOne(() => ProductType)
-  @JoinColumn()
-  type?: ProductType;
+  @ManyToMany(() => ProductType)
+  @JoinTable()
+  types?: ProductType[];
 
   @Column({ default: null })
   model?: string;
