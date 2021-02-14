@@ -9,6 +9,7 @@ import database from "./database";
 import Routes from './constants/routes'
 
 import ProductRoute from "./routes/product"
+import ReportRoute from "./routes/report"
 
 // Vars
 dotenv.config();
@@ -25,6 +26,7 @@ const onSuccessDatabaseConnection = async () => {
 
   // Routes
   app.use(`${VERSION.ONE}/${Routes.PRODUCT}`, ProductRoute);
+  app.use(`${VERSION.ONE}/${Routes.REPORT}`, ReportRoute);
 
   // Server
   app.listen(

@@ -10,7 +10,7 @@ import { ProductType } from "../entity/product/ProductType";
 import multerHelper from "../utilities/multerHelper";
 import responseHelper from "../utilities/responseHelper";
 import { ProductDTO } from "../dto/request/product.dto";
-import { LessThanOrEqual } from "typeorm";
+import { BASIC_PRODUCT_QUERY_FIELDS } from "../queries/basic-product-query";
 const router = express.Router();
 
 database.init();
@@ -33,25 +33,7 @@ router.get(
         .leftJoinAndSelect("product.distributors", "distributors")
         .leftJoinAndSelect("product.types", "types")
         .leftJoinAndSelect("product.photos", "photos")
-        .select([
-          "product.id",
-          "product.alias",
-          "product.name",
-          "product.createdAt",
-          "product.updatedAt",
-          "product.model",
-          "product.price",
-          "distributors.id",
-          "distributors.alias",
-          "distributors.name",
-          "types.id",
-          "types.alias",
-          "types.type",
-          "types.name",
-          "photos.id",
-          "photos.alias",
-          "photos.filename",
-        ]);
+        .select(BASIC_PRODUCT_QUERY_FIELDS);
       productQueryBuilder.where(`product.createdAt IS NOT NULL`);
 
       if (price) {
