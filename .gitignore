@@ -16,4 +16,4 @@ _book
 *.pdf
 yarn.lock
 .env
-static/images
+backend/src/static/images

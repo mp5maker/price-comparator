@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "async": "^3.2.0",
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "date-fns": "^2.16.1",
     "dotenv-safe": "^8.2.0",
     "elasticsearch": "^16.7.2",
     "express": "^4.17.1",
+    "form-data": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
     "multer": "^1.4.2",
@@ -30,6 +32,7 @@
     "start": "ts-node src/index.ts",
     "dev": "ts-node-dev src/index.ts",
     "build": "tsc -P .",
+    "populate": "ts-node src/scripts/populate-product.ts",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
     "management": "TYPEORM_TYPE=management node --require ts-node/register ./node_modules/typeorm/cli.js migration:run",
     "create:management": "TYPEORM_TYPE=management node --require ts-node/register ./node_modules/typeorm/cli.js migration:create -n"
