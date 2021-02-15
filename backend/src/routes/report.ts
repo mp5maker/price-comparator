@@ -15,20 +15,18 @@ router.get("/distributor-types", async (_request, response) => {
   try {
     const products = await database.productRepository
       .createQueryBuilder("product")
-      .leftJoinAndSelect("product.distributors", "distributors")
-      .leftJoinAndSelect("product.types", "types")
+      .leftJoinAndMapOne(
+        "product.distributor",
+        "product.distributors",
+        "distributor"
+      )
+      .leftJoinAndMapOne("product.type", "product.types", "type")
       .select([
-        "product.id",
-        "product.name",
-        "product.alias",
-        "distributors.id",
-        "distributors.alias",
-        "distributors.name",
-        "types.id",
-        "types.alias",
-        "types.name",
+        `distributor.name AS "distributorName"`,
+        `SUM(type.id) AS "totalTypes"`,
       ])
-      .getMany();
+      .groupBy("distributor.id")
+      .getRawMany();
     response.status(RESPONSE_STATUS.OK).json(products);
   } catch (error) {
     return responseHelper.error.unknown({ error, response });
@@ -41,10 +39,21 @@ router.get("/distributor-types", async (_request, response) => {
  */
 router.get("/type-distributors", async (_request, response) => {
   try {
-    const product = await database.productRepository
+    const products = await database.productRepository
       .createQueryBuilder("product")
-      .getMany();
-    response.state(RESPONSE_STATUS.OK).json(product);
+      .leftJoinAndMapOne(
+        "product.distributor",
+        "product.distributors",
+        "distributor"
+      )
+      .leftJoinAndMapOne("product.type", "product.types", "type")
+      .select([
+        `type.name AS "typeName"`,
+        `SUM(distributor.id) AS "totalDistributors"`,
+      ])
+      .groupBy("type.id")
+      .getRawMany();
+    response.status(RESPONSE_STATUS.OK).json(products);
   } catch (error) {
     return responseHelper.error.unknown({ error, response });
   }

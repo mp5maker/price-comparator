@@ -8,7 +8,7 @@ export default {
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
   synchronize: false,
-  logging: false,
+  logging: true,
   entities: ["src/entity/**/*.ts"],
   migrations: [
     process.env.TYPEORM_TYPE === "management"
