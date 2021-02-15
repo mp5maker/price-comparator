@@ -9,9 +9,38 @@ database.init();
 
 /**
  * @Get
- * /report/distributor-types
+ * /report/distributor-types/
  */
 router.get("/distributor-types", async (_request, response) => {
+  try {
+    const products = await database.productRepository
+      .createQueryBuilder("product")
+      .leftJoinAndMapOne(
+        "product.distributor",
+        "product.distributors",
+        "distributor"
+      )
+      .leftJoinAndSelect("product.types", "types")
+      .select([
+        "distributor.name",
+        `COUNT(case WHEN types.id='1' then 1 end) AS "television"`,
+        `COUNT(case WHEN types.id='2' then 1 end) AS "washingMachine"`,
+        `COUNT(case WHEN types.id='3' then 1 end) AS "fridge"`,
+        `COUNT(case WHEN types.id='4' then 1 end) AS "airConditioner"`,
+      ])
+      .groupBy('distributor.id')
+      .getRawMany();
+    response.status(RESPONSE_STATUS.OK).json(products);
+  } catch (error) {
+    return responseHelper.error.unknown({ error, response });
+  }
+});
+
+/**
+ * @Get
+ * /report/distributor-types/pie
+ */
+router.get("/distributor-types/pie", async (_request, response) => {
   try {
     const products = await database.productRepository
       .createQueryBuilder("product")
@@ -23,7 +52,7 @@ router.get("/distributor-types", async (_request, response) => {
       .leftJoinAndMapOne("product.type", "product.types", "type")
       .select([
         `distributor.name AS "distributorName"`,
-        `SUM(type.id) AS "totalTypes"`,
+        `COUNT(type.id) AS "totalTypes"`,
       ])
       .groupBy("distributor.id")
       .getRawMany();
@@ -35,9 +64,37 @@ router.get("/distributor-types", async (_request, response) => {
 
 /**
  * @Get
- * /report/type-distributors
+ * /report/type-distributors/
  */
-router.get("/type-distributors", async (_request, response) => {
+router.get("/type-distributors/", async (_request, response) => {
+  try {
+    const products = await database.productRepository
+      .createQueryBuilder("product")
+      .leftJoinAndMapOne("product.type", "product.types", "type")
+      .leftJoinAndSelect("product.distributors", "distributors")
+      .select([
+        `type.name`,
+        `COUNT(case WHEN distributors.id='1' then 1 end) AS "elektra"`,
+        `COUNT(case WHEN distributors.id='2' then 1 end) AS "transcom"`,
+        `COUNT(case WHEN distributors.id='3' then 1 end) AS "esquire"`,
+        `COUNT(case WHEN distributors.id='4' then 1 end) AS "butterfly"`,
+        `COUNT(case WHEN distributors.id='5' then 1 end) AS "bestElectronice"`,
+        `COUNT(case WHEN distributors.id='6' then 1 end) AS "mKElectronics"`,
+        `COUNT(case WHEN distributors.id='7' then 1 end) AS "rangsElectronics"`,
+      ])
+      .groupBy("type.id")
+      .getRawMany();
+    response.status(RESPONSE_STATUS.OK).json(products);
+  } catch (error) {
+    return responseHelper.error.unknown({ error, response });
+  }
+});
+
+/**
+ * @Get
+ * /report/type-distributors/pie
+ */
+router.get("/type-distributors/pie", async (_request, response) => {
   try {
     const products = await database.productRepository
       .createQueryBuilder("product")
@@ -49,7 +106,7 @@ router.get("/type-distributors", async (_request, response) => {
       .leftJoinAndMapOne("product.type", "product.types", "type")
       .select([
         `type.name AS "typeName"`,
-        `SUM(distributor.id) AS "totalDistributors"`,
+        `COUNT(distributor.id) AS "totalDistributors"`,
       ])
       .groupBy("type.id")
       .getRawMany();
