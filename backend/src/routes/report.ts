@@ -11,7 +11,7 @@ database.init();
  * @Get
  * /report/distributor-types/
  */
-router.get("/distributor-types", async (_request, response) => {
+router.get("/distributor-types/bar", async (_request, response) => {
   try {
     const products = await database.productRepository
       .createQueryBuilder("product")
@@ -66,7 +66,7 @@ router.get("/distributor-types/pie", async (_request, response) => {
  * @Get
  * /report/type-distributors/
  */
-router.get("/type-distributors/", async (_request, response) => {
+router.get("/type-distributors/bar", async (_request, response) => {
   try {
     const products = await database.productRepository
       .createQueryBuilder("product")
@@ -78,7 +78,7 @@ router.get("/type-distributors/", async (_request, response) => {
         `COUNT(case WHEN distributors.id='2' then 1 end) AS "transcom"`,
         `COUNT(case WHEN distributors.id='3' then 1 end) AS "esquire"`,
         `COUNT(case WHEN distributors.id='4' then 1 end) AS "butterfly"`,
-        `COUNT(case WHEN distributors.id='5' then 1 end) AS "bestElectronice"`,
+        `COUNT(case WHEN distributors.id='5' then 1 end) AS "bestElectronics"`,
         `COUNT(case WHEN distributors.id='6' then 1 end) AS "mKElectronics"`,
         `COUNT(case WHEN distributors.id='7' then 1 end) AS "rangsElectronics"`,
       ])
